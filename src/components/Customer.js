@@ -49,8 +49,8 @@ class Customer extends Component {
                                 }) 
                                 :
                                 <TableRow>
-                                    <TableCell colSpan="7">
-                                        <LinearProgress className="progress" color="secondary" variant="buffer" value={this.props.completed} valueBuffer={this.props.buffer} />
+                                    <TableCell colSpan="7" align="center">
+                                        <LinearProgress className="progress" color="primary" variant="buffer" value={this.props.completed} valueBuffer={this.props.buffer} />
                                     </TableCell>
                                 </TableRow> 
                             }

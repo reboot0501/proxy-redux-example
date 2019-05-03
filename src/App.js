@@ -48,7 +48,7 @@ class App extends Component {
 
   componentDidMount() {
     this.timer = setInterval(this.progress, 500);    
-    this.loadData();
+    //this.loadData();
   }   
 
   componentWillUnmount() {

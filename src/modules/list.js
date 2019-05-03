@@ -17,18 +17,28 @@ function listCallApi() {
 } 
 // API요청 함수
 function deleteCallApi(id) {
-    const url = "/customer/deleteById/" + id;
-    console.log(" ★★★ deleteById id :" + id); 
-    return axios.get(url);
+    const deleteCallApiUrl = "/customer/deleteById/" + id;
+    console.log(" ★★★ deleteCallApiUrl :" + deleteCallApiUrl); 
+    return axios.get(deleteCallApiUrl);
+}
+// API요청 함수
+function searchCallApi(searchName) {
+    const searchCallApiUrl = "/customer/search/" + searchName;
+    console.log(" ★★★ searchCallApiUrl :" + searchCallApiUrl); 
+    return axios.get(searchCallApiUrl);
 }
 // 액션 타입 정의
 const GET_LIST = 'GET_LIST';
 // 액션 타입 정의
 const GET_DELETE = 'GET_DELETE';
+// 액션 타입 정의
+const GET_SEARCH = 'GET_SEARCH';
 // 액션 생성자
 export const getList = createAction(GET_LIST, listCallApi);
 // 액션 생성자
 export const getDelete = createAction(GET_DELETE, deleteCallApi);
+// 액션 생성자
+export const getSearch = createAction(GET_SEARCH, searchCallApi);
 
 // 초기 state
 const initialState = {
@@ -62,7 +72,15 @@ export default applyPenders(reducer, [
                 data: action.payload.data
             }
         },
-    }    
+    },
+    {
+        type: GET_SEARCH,
+        onSuccess: (state, action) => {  
+            return {
+                customers: action.payload.data
+            }
+        },
+    }        
         /* 다른 Pender 액션들
             { type: GET_SOMETHING1, onSuccess: (state, action) => ... },
             { type: GET_SOMETHING2, onSuccess: (state, action) => ... }            

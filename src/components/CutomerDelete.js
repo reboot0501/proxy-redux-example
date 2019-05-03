@@ -32,31 +32,19 @@ class CutomerDelete extends Component {
         });     
     }    
 
-    deleteCustomer = async () => {
+    deleteCustomer = async (id) => {
         try {
-            const { DeleteAction, id } = this.props;
+            const { DeleteAction } = this.props;
             console.log(" ★★★ CustomerDelete.js deleteCustomer request id : " + id);
             await DeleteAction.getDelete(id)
                             .then((response) => {
                                 console.log(" ★★★ CustomerDelete.js deleteCustomer 결과 : \n" + JSON.stringify(response.result,null,2));
                                 this.props.stateRefresh();
                             });
-            this.props.stateRefresh();            
         } catch (error) {
             console.log(" ★★★ CustomerDelete.js deleteCustomer 에러 : " + error );
         }
     }
-
-    handleSubmit = async (e) => {
-        e.preventDefault();
-        this.deleteCustomer();
-        this.setState({
-            open: false          
-        });         
-        //window.location.reload(); //화면 전체 리로딩
-
-    }    
-
 
     render() {
         return (

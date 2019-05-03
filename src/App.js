@@ -51,7 +51,7 @@ class App extends Component {
     const { ListActions } = this.props; // mapDispatchToProps(액션연결)에서 생성한 ListActions 상수 정의
     try { // await 문을 쓸때는 반드시 try catch 사용
         const response = await ListActions.getList(); // 액션연결의 액션함수 호출, 기다려야 할 Promise 앞에 await
-        console.log("★★★★ " + JSON.stringify(response,null,2));
+        console.log("★★★★ App.js loadData 결과 : \n" + JSON.stringify(response,null,2));
     } catch (error) {
         console.log(error);
     }

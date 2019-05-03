@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import CustomerList from './CustomerList';
 import CustomerInsert from './CustomerInsert';
+import CustomerSearch from './CustomerSearch';
 
+import TextField from '@material-ui/core/TextField';
 import './Customer.scss'
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -15,20 +17,49 @@ import Typography from '@material-ui/core/Typography';
 
 class Customer extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchName: ''
+        }
+    }
+
+    handleValueChange = (e) => {
+        let nextState = {};
+        nextState[e.target.name] = e.target.value;
+        this.setState(nextState);
+    }
+
+    handleSearchNameClear = () => {
+        this.setState({
+            searchName: ''
+        })
+    }
+
     render() {
         const cellList = ["번호", "프로필이미지", "이름", "생년월일", "성별", "직업", "삭제"];
         return (
             <div className="root">
-                <div className="menu">
-                    <CustomerInsert stateRefresh={this.props.stateRefresh}/>
-                </div>
+                <Paper className="paper">
+                    <div className="menuTextField" >
+                        <TextField label="검색할 고객이름" type="text" name="searchName" value={this.state.searchName} onChange={this.handleValueChange}/>
+                    </div>
+                    <div className="menuButtonWrap">
+                        <span className="menuButton">
+                            <CustomerInsert stateRefresh={this.props.stateRefresh}/>
+                        </span>
+                        <span className="menuButton">
+                            <CustomerSearch searchName={this.state.searchName} searchNameClear={this.handleSearchNameClear} />
+                        </span>
+                    </div>
+                </Paper>
                 <Paper className="paper">
                     <Table>
                         <TableHead > 
                             <TableRow>
-                                { cellList.map(c => {
+                                { cellList.map((c, index) => {
                                     return (
-                                        <TableCell className="tableHead"><Typography variant="h6">{c}</Typography></TableCell>
+                                        <TableCell className="tableHead" key={index}><Typography variant="h6" >{c}</Typography></TableCell>
                                     );
                                 })}
                             </TableRow>

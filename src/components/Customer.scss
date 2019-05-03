@@ -1,0 +1,25 @@
+.root {
+   width: 100%;
+   min-width: 1080px;
+}
+
+.menu {
+   margin-top: 15px;
+   margin-bottom: 15px;
+   display: flex;
+   justify-content: center;
+}
+
+.paper {
+   margin-left: 10px;
+   margin-right: 10px;
+}
+
+.tableHead {
+   background: orange;
+}
+
+.progress {
+   margin: 50px;
+   padding: 10px;
+}

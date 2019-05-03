@@ -11,19 +11,30 @@ class App extends Component {
     super(props);
     this.state = {
       customers: '',
+      /**
+       * Linear Progrss bar 적용 : completed, buffer
+       */
       completed: 0,
       buffer: 10
     }
   }
-
+  /**
+   * Linear Progrss bar 이벤트 함수 progress 정의
+   */
   progress = () => {
     const { completed } = this.state;
     if (completed > 100) {
-      this.setState({ completed: 0, buffer: 10 });
+      this.setState({
+        completed: 0,
+        buffer: 10 
+      });
     } else {
       const diff = Math.random() * 10;
       const diff2 = Math.random() * 10;
-      this.setState({ completed: completed + diff, buffer: completed + diff + diff2 });
+      this.setState({ 
+        completed: completed + diff, 
+        buffer: completed + diff + diff2 
+      });
     }
   };
 
@@ -47,7 +58,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.timer = setInterval(this.progress, 500);    
+    this.timer = setInterval(this.progress, 200);    
     this.loadData();
   }   
 

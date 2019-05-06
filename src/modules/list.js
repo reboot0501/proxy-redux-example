@@ -22,28 +22,39 @@ function deleteCallApi(id) {
     return axios.get(deleteCallApiUrl);
 }
 // API요청 함수
-function searchCallApi(searchName) {
-    const searchCallApiUrl = "/customer/search/" + searchName;
-    console.log(" ★★★ searchCallApiUrl :" + searchCallApiUrl); 
-    return axios.get(searchCallApiUrl);
+function searchCallApi(params) {
+    const searchCallApiUrl = "/customer/search/";
+    //console.log(" ★★★ request!!! \n" + JSON.stringify(params, null,2));  
+    const jsonData = JSON.stringify(params);
+    const config = {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    };
+    return axios.post(searchCallApiUrl, jsonData, config);
 }
 // 액션 타입 정의
 const GET_LIST = 'GET_LIST';
 // 액션 타입 정의
 const GET_DELETE = 'GET_DELETE';
 // 액션 타입 정의
-const GET_SEARCH = 'GET_SEARCH';
+const POST_SEARCH = 'POST_SEARCH';
 // 액션 생성자
 export const getList = createAction(GET_LIST, listCallApi);
 // 액션 생성자
 export const getDelete = createAction(GET_DELETE, deleteCallApi);
 // 액션 생성자
-export const getSearch = createAction(GET_SEARCH, searchCallApi);
+export const postSearch = createAction(POST_SEARCH, searchCallApi);
 
 // 초기 state
 const initialState = {
-    customers : '',
-    data: '' 
+    customers : [],
+    data: '',
+    totalPages: 0,
+    totalCount: 0,
+    last: false,
+    first: false,
+    empty: true
 }
 
 // 액션 함수 정의 switch 문 대신 handleActions 사용
@@ -74,10 +85,16 @@ export default applyPenders(reducer, [
         },
     },
     {
-        type: GET_SEARCH,
+        type: POST_SEARCH,
         onSuccess: (state, action) => {  
+            //console.log(" !!!!! applyPenders action\n" + JSON.stringify(action.payload.data,null,2));
             return {
-                customers: action.payload.data
+                   customers: action.payload.data.content,
+                   totalPages: action.payload.data.totalPages,
+                   totalCount: action.payload.data.totalElements,
+                   last: action.payload.data.last,
+                   first: action.payload.data.first,
+                   empty: action.payload.data.empty
             }
         },
     }        
